@@ -1,14 +1,12 @@
 const axios = require('axios')
-const my_token  = process.env.BOT_TOKEN
 
-const url = `https://api.telegram.org/bot${my_token}`
-
-const getAxiosInstance = () => {
+const getAxiosInstance = (BASE_URL, headers = {}) => {
     return {
         get(method, params) {
             return axios.get(`/${method}`, {
-                baseURL: url,
+                baseURL: BASE_URL,
                 params,
+                headers,
             });
         },
         post(method, data) {
@@ -17,9 +15,10 @@ const getAxiosInstance = () => {
                 baseURL: url,
                 url: `/${method}`,
                 data,
+                headers,
             })
         }
     }
 }
 
-module.exports = { axiosInstance : getAxiosInstance() }
+module.exports = { getAxiosInstance }
